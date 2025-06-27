@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Celebración!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Confetti Library CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <style>
+        /* Estilos personalizados para centrar y diseño responsive */
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0; /* Color de fondo suave */
+            margin: 0;
+            padding: 1rem; /* Añadir padding para pantallas pequeñas */
+            box-sizing: border-box; /* Incluir padding en el tamaño total */
+            overflow: hidden; /* Evitar barras de desplazamiento debido al confeti */
+        }
+        /* Ocultar la pantalla del mensaje inicialmente */
+        #messageScreen {
+            display: none;
+        }
+        /* Animación de la burbuja para los emojis/flores */
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .emoji-flower {
+            animation: popIn 0.5s ease-out forwards;
+            display: inline-block;
+            margin: 0 0.5rem;
+            opacity: 0; /* Oculto inicialmente, se anima al mostrarse */
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor principal para centrar el contenido -->
+    <div class="flex flex-col items-center justify-center w-full max-w-md mx-auto">
+
+        <!-- Primera pantalla: El botón -->
+        <div id="buttonScreen" class="bg-white p-8 rounded-lg shadow-xl text-center flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform w-full">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">¡Hola!</h1>
+            <button
+                class="px-8 py-4 bg-blue-600 text-white font-semibold text-lg rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50 transition transform hover:scale-105 active:scale-95"
+                onclick="showMessage()">
+                Presiona aquí
+            </button>
+        </div>
+
+        <!-- Segunda pantalla: El mensaje oculto inicialmente con efectos -->
+        <div id="messageScreen" class="bg-white p-8 rounded-lg shadow-xl text-center flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform w-full mt-4">
+            <div class="mb-4">
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.1s;">🎉</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.2s;">🌸</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.3s;">🥳</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.4s;">🌷</span>
+            </div>
+            <p class="text-3xl font-extrabold text-red-600 animate-pulse">
+                "¡Por presionar soy Geyyy y me gustan los pitos!"
+            </p>
+            <div class="mt-4">
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.5s;">🎊</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.6s;">🌺</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.7s;">💖</span>
+                <span class="emoji-flower text-4xl" style="animation-delay: 0.8s;">🌼</span>
+            </div>
+            <button
+                class="mt-8 px-6 py-3 bg-gray-500 text-white font-semibold rounded-full shadow-md hover:bg-gray-600 focus:outline-none focus:ring-4 focus:ring-gray-400 focus:ring-opacity-50 transition transform hover:scale-105 active:scale-95"
+                onclick="showButton()">
+                Volver
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Muestra la pantalla del mensaje, oculta la pantalla del botón y lanza los efectos.
+         */
+        function showMessage() {
+            document.getElementById('buttonScreen').style.display = 'none';
+            document.getElementById('messageScreen').style.display = 'flex'; // Usar flex para centrar contenido
+
+            // Lanzar confeti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a']
+            });
+
+            // Animar los emojis/flores
+            const emojiFlowers = document.querySelectorAll('.emoji-flower');
+            emojiFlowers.forEach(emoji => {
+                emoji.style.opacity = '1'; // Asegurarse de que sean visibles para la animación
+            });
+        }
+
+        /**
+         * Muestra la pantalla del botón y oculta la pantalla del mensaje.
+         */
+        function showButton() {
+            document.getElementById('messageScreen').style.display = 'none';
+            document.getElementById('buttonScreen').style.display = 'flex'; // Usar flex para centrar contenido
+
+            // Reiniciar la opacidad de los emojis/flores para la próxima vez
+            const emojiFlowers = document.querySelectorAll('.emoji-flower');
+            emojiFlowers.forEach(emoji => {
+                emoji.style.opacity = '0';
+            });
+        }
+    </script>
+</body>
+</html>
